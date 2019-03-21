@@ -6,9 +6,16 @@ function enableVideoControls() {
         video.volume = .5;
         video.addEventListener('play', function() {
             var play_btn = document.querySelector('.QvAa1');
-            play_btn.parentElement.removeChild(play_btn);
+            
+            if(play_btn) {
+                play_btn.parentElement.removeChild(play_btn);
+            }
+
             var overlay = document.querySelector('.oujXn');
-            overlay.parentElement.removeChild(overlay);
+
+            if(overlay) {
+                overlay.parentElement.removeChild(overlay);
+            }
         });
     }
 
@@ -20,7 +27,7 @@ function enableVideoControls() {
 }
 
 function observe() {
-    var observer = new MutationObserver(removeBoxes);
+    var observer = new MutationObserver(enableVideoControls);
     var config = { attributes: false, childList: true, characterData: false, subtree: true};
     target = document.querySelector('body');
 
@@ -31,5 +38,4 @@ function observe() {
     console.log('Observer attached');
 }
 
-// observe();
-enableVideoControls();
+observe();
