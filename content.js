@@ -1,17 +1,22 @@
-function enableVideoControls(mutations) {
+function enableVideoControls() {
     var video = document.querySelector('video');
-    video.controls = true;
-    video.volume = .5;
+    
+    if(video) {
+        video.controls = true;
+        video.volume = .5;
+        video.addEventListener('play', function() {
+            var play_btn = document.querySelector('.QvAa1');
+            play_btn.parentElement.removeChild(play_btn);
+            var overlay = document.querySelector('.oujXn');
+            overlay.parentElement.removeChild(overlay);
+        });
+    }
+
     var soc_btn = document.getElementsByClassName('G_hoz LcKDX _6JfJs')[0];
-    soc_btn.style.bottom = 'auto';
 
-    video.addEventListener('play', function() {
-        var play_btn = document.querySelector('.QvAa1');
-        play_btn.parentElement.removeChild(play_btn);
-        var overlay = document.querySelector('.oujXn');
-        overlay.parentElement.removeChild(overlay);
-
-    });
+    if(soc_btn) {
+        soc_btn.style.bottom = 'auto';
+    }
 }
 
 function observe() {
@@ -27,5 +32,4 @@ function observe() {
 }
 
 // observe();
-
 enableVideoControls();
