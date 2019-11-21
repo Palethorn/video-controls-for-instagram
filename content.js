@@ -1,10 +1,27 @@
+var volume = .5;
+
 function enableVideoControls() {
-    var video = document.querySelector('video');
-    
-    if(video) {
+    var videos = document.getElementsByTagName('video');
+    var video = null;
+
+    for(var i = 0; i < videos.length; i++) {
+        video = videos[i];
         video.controls = true;
-        video.volume = .5;
-        video.addEventListener('play', function() {
+        video.volume = volume;
+
+        video.addEventListener('play', function(e) {
+            var PyenC = document.querySelector('.PyenC');
+
+            if(PyenC) {
+                PyenC.parentNode.removeChild(PyenC);
+            }
+
+            var fXIG0 = document.querySelector('.fXIG0');
+
+            if(fXIG0) {
+                fXIG0.parentNode.removeChild(fXIG0);
+            }
+
             var play_btn = document.querySelector('.QvAa1');
             
             if(play_btn) {
@@ -15,6 +32,18 @@ function enableVideoControls() {
 
             if(overlay) {
                 overlay.parentElement.removeChild(overlay);
+            }
+        });
+
+        video.addEventListener('volumechange', function(e) {
+            var videos = document.getElementsByTagName('video');
+            var video = null;
+            volume = e.target.volume;
+            chrome.storage.local.set({volume: volume});
+
+            for(var i = 0; i < videos.length; i++) {
+                video = videos[i];
+                video.volume = volume;
             }
         });
     }
@@ -37,5 +66,13 @@ function observe() {
 
     console.log('Observer attached');
 }
+
+chrome.storage.local.get({
+    volume: .5,
+}, function(items) {
+    if(items.volume) {
+        volume = items.volume;
+    }
+});
 
 observe();
